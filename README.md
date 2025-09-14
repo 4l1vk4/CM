@@ -41,4 +41,5 @@ python3 prac1.py
 
 ### Пример использования
 
+![Снимок экрана 2025-09-14 в 17.04.33.png](../../../../../var/folders/hh/n7v_bbdx4630m1cpbhfbwc_80000gn/T/TemporaryItems/NSIRD_screencaptureui_OoWf9Q/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-09-14%20%D0%B2%2017.04.33.png)
 
