@@ -12,13 +12,15 @@ while True:
         continue
     cmd = user_input[0]
     args = user_input[1:]
+    # for i in range(len(args)):
+    #     all_args = args.join("")
     if cmd not in commands:
         print(f"Неизвестная команда: {cmd}")
         continue
     if cmd == "ls":
         print(cmd, args)
     elif cmd == "cd":
-        print(cmd, args)
+        print("Команда существует (в данный момент не имеет функционала)")
     elif cmd == "exit":
         print("Выход")
         break
