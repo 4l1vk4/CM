@@ -83,7 +83,8 @@ python3 prac1.py
 
 ### Установка и запуск
 ```sec
-python3 2stage.py --vfs-path /tmp/vfs --script init.sh
+python3 1stage.py --vfs-path /tmp/vfs --script init.sh
+./start.sh
 ```
 ### Пример использования
 ![Снимок экрана 2025-09-29 в 12.50.11.png](screenshots/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-09-29%20%D0%B2%2012.50.11.png)
