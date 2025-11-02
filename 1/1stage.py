@@ -58,7 +58,6 @@ if args.script:
     except Exception as e:
         print(f"Ошибка при выполнении скрипта: {e}")
 
-# --- REPL ---
 while not end_status:
     command_line = input("<VFS> ")
     if not command(command_line):

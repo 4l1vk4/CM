@@ -1,0 +1,7 @@
+{
+  "package_name": "requests",
+  "repository_url": "https://github.com/psf/requests",
+  "test_repo_mode": "read-only",
+  "ascii_tree_mode": true,
+  "filter_substring": "req"
+}
