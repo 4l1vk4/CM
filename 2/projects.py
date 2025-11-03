@@ -37,16 +37,16 @@ def main():
         sys.exit(1)
     try:
         cfg = load(sys.argv[1])
-        cfg = validate(cfg)
-    except (FileNotFoundError, json.JSONDecodeError, KeyError, TypeError) as e:
+        cfg= validate(cfg)
+
+        if isinstance(cfg, list):
+            print("\n".join(cfg))
+        else:
+            for k, v in cfg.items():
+                print(f"{k}: {v}")
+    except (FileNotFoundError, json.JSONDecodeError, TypeError) as e:
         print("[Ошибка]", e)
         sys.exit(1)
-
-    if cfg:
-        print("\n".join(cfg))
-    else:
-        for k, v in cfg.items():
-            print(f"{k}: {v}")
 
 if __name__ == "__main__":
     main()
