@@ -4,5 +4,5 @@
   "test_repo_mode": "read-only",
   "package_version": "2.31.0",
   "ascii_tree_mode": "52",
-  "filter_substring": "req"
+  "filter_substring": ""
 }

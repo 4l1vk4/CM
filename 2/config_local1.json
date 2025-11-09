@@ -1,0 +1,8 @@
+{
+    "package_name": "my-local-package",
+    "repository_url": "./pack1.json",
+    "test_repo_mode": "local",
+    "package_version": "1.0.0",
+    "ascii_tree_mode": false,
+    "filter_substring": ""
+}

@@ -38,9 +38,9 @@
 
 ### Установка и запуск
 ```bash
-python projects.py
-python projects.py config.json
-python projects.py not_found.json
-python projects.py err_val.json
-python projects.py 2_err.json
+python 1st.py
+python 1st.py config.json
+python 1st.py not_found.json
+python 1st.py err_val.json
+python 1st.py 2_err.json
 ```

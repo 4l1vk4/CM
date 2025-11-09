@@ -2,5 +2,5 @@
   "package_name": "requests",
   "repository_url": "https://github.com/psf/requests",
   "ascii_tree_mode": true,
-  "filter_substring": "req"
+  "filter_substring": ""
 }
