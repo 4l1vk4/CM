@@ -1,0 +1,8 @@
+{
+  "package_name": "A",
+  "repository_url": "graph1.json",
+  "test_repo_mode": "graph",
+  "package_version": "1.0.0",
+  "ascii_tree_mode": false,
+  "filter_substring": ""
+}
