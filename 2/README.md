@@ -83,10 +83,10 @@ python 1st.py 2_err.json
 
 #### Пример 1 — **Remote-режим**
 ```json
-"package_name": "express",
-"repository_url":"https://raw.githubusercontent.com/expressjs/express/4.18.2/package.json",
+"package_name": "react",
+"repository_url": "https://registry.npmjs.org/react/18.2.0",
 "test_repo_mode": "remote",
-"package_version": "4.18.2",
+"package_version": "18.2.0",
 "ascii_tree_mode": false,
 "filter_substring": ""
 ```
