@@ -45,7 +45,6 @@ def build_dependency_graph(cfg):
     filter_substr = cfg.get("filter_substring", "").lower()
 
     try:
-        # Загружаем данные в зависимости от режима
         if mode == "graph" or mode == "local":
             path = Path(repo_url)
             if not path.exists():
@@ -60,12 +59,10 @@ def build_dependency_graph(cfg):
         print(f"[Ошибка при загрузке данных]: {e}")
         sys.exit(1)
 
-    # Проверяем тип данных
     if not isinstance(data, dict):
         print("[Ошибка] Неверный формат данных графа (ожидается объект JSON).")
         sys.exit(1)
 
-    # Если указан фильтр — исключаем пакеты, которые содержат подстроку
     if filter_substr:
         data = {k: v for k, v in data.items() if filter_substr not in k.lower()}
 
@@ -85,7 +82,6 @@ def build_dependency_graph(cfg):
         if not isinstance(deps, list):
             deps = []
 
-        # Учитываем фильтр для зависимостей
         deps = [d for d in deps if filter_substr not in d.lower()] if filter_substr else deps
 
         graph[pkg] = deps
