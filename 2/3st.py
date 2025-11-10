@@ -6,8 +6,8 @@ from collections import deque
 
 CONFIG = {
     "package_name": str,
-    "repository_url": str,
-    "test_repo_mode": str,
+    "repository_url": str,  
+    "test_repo_mode": str,  
     "package_version": str,
     "ascii_tree_mode": bool,
     "filter_substring": str,
@@ -29,63 +29,65 @@ def validate(cfg):
             errors.append(
                 f"[Ошибка] Неверный тип у параметра '{key}': ожидался {typ.__name__}, получен {type(cfg[key]).__name__}"
             )
-
     if errors:
         for e in errors:
             print(e)
         sys.exit(1)
     return cfg
 
+def fetch_dependencies(pkg_name, pkg_version, mode, repo_url=None):
+    if mode == "local" or mode == "graph":
+        path = Path(repo_url)
+        if not path.exists():
+            raise FileNotFoundError(f"Локальный файл не найден: {path}")
+        data = json.loads(path.read_text(encoding="utf-8"))
+        deps = data.get(pkg_name, [])
+        if not isinstance(deps, list):
+            deps = []
+        return {dep: "" for dep in deps} 
+
+    elif mode == "remote":
+        url = f"https://registry.npmjs.org/{pkg_name}/{pkg_version}"
+        print(f"[Информация] Сформирован URL: {url}")
+        try:
+            with urllib.request.urlopen(url) as response:
+                data = json.loads(response.read().decode("utf-8"))
+            deps = data.get("dependencies", {})
+            if not deps and "versions" in data and pkg_version in data["versions"]:
+                deps = data["versions"][pkg_version].get("dependencies", {})
+            return deps
+        except Exception as e:
+            print(f"[Ошибка загрузки зависимостей {pkg_name}]: {e}")
+            return {}
+    else:
+        raise ValueError(f"Неизвестный режим: {mode}")
+
 def build_dependency_graph(cfg):
     print("\n=== Построение графа зависимостей ===")
 
     start_pkg = cfg["package_name"]
     mode = cfg["test_repo_mode"]
-    repo_url = cfg["repository_url"]
+    repo_url = cfg.get("repository_url")
     filter_substr = cfg.get("filter_substring", "").lower()
 
-    try:
-        if mode == "graph" or mode == "local":
-            path = Path(repo_url)
-            if not path.exists():
-                raise FileNotFoundError(f"Файл графа не найден: {path}")
-            data = json.loads(path.read_text(encoding="utf-8"))
-        elif mode == "remote":
-            with urllib.request.urlopen(repo_url) as response:
-                data = json.loads(response.read().decode("utf-8"))
-        else:
-            raise ValueError(f"Неизвестный режим: {mode}")
-    except Exception as e:
-        print(f"[Ошибка при загрузке данных]: {e}")
-        sys.exit(1)
-
-    if not isinstance(data, dict):
-        print("[Ошибка] Неверный формат данных графа (ожидается объект JSON).")
-        sys.exit(1)
-
-    if filter_substr:
-        data = {k: v for k, v in data.items() if filter_substr not in k.lower()}
-
     visited = set()
-    queue = [start_pkg]
+    queue = deque([start_pkg])
     graph = {}
     has_cycle = False
 
     while queue:
-        pkg = queue.pop(0)
+        pkg = queue.popleft()
         if pkg in visited:
             has_cycle = True
             continue
         visited.add(pkg)
 
-        deps = data.get(pkg, [])
-        if not isinstance(deps, list):
-            deps = []
+        deps = fetch_dependencies(pkg, cfg["package_version"], mode, repo_url)
+        if filter_substr:
+            deps = {k: v for k, v in deps.items() if filter_substr not in k.lower()}
 
-        deps = [d for d in deps if filter_substr not in d.lower()] if filter_substr else deps
-
-        graph[pkg] = deps
-        for dep in deps:
+        graph[pkg] = list(deps.keys())
+        for dep in deps.keys():
             if dep not in visited:
                 queue.append(dep)
 
@@ -100,7 +102,6 @@ def build_dependency_graph(cfg):
         print("\nОбнаружены циклические зависимости")
     else:
         print("\nЦиклов не обнаружено.")
-
 
 def main():
     if len(sys.argv) < 2:
