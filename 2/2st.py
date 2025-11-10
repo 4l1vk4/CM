@@ -5,7 +5,7 @@ from pathlib import Path
 
 CONFIG = {
     "package_name": str,
-    "repository_url": str,
+    "repository_url": str,  # всё ещё есть, но теперь вычисляется автоматически
     "test_repo_mode": str,
     "package_version": str,
     "ascii_tree_mode": bool,
@@ -28,7 +28,6 @@ def validate(cfg):
             errors.append(
                 f"[Ошибка] Неверный тип у параметра '{key}': ожидался {typ.__name__}, получен {type(cfg[key]).__name__}"
             )
-
     if errors:
         for e in errors:
             print(e)
@@ -36,7 +35,11 @@ def validate(cfg):
     return cfg
 
 def get_dependencies(cfg):
-    print("\nСбор данных о зависимостях")
+    print("\n=== Сбор данных о зависимостях ===")
+    if cfg["test_repo_mode"] == "remote":
+        cfg["repository_url"] = f"https://registry.npmjs.org/{cfg['package_name']}/{cfg['package_version']}"
+        print(f"[Информация] Сформирован URL: {cfg['repository_url']}")
+
     repo_url = cfg["repository_url"]
     mode = cfg["test_repo_mode"]
 
