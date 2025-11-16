@@ -144,4 +144,5 @@ python 2st.py config_remote1.json
 ### Команды для запуска
 ```bash
 python 3st.py graph_conf1.json
+python 3st.py config_remote1.json 
 ```
