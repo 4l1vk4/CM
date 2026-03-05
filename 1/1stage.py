@@ -3,6 +3,8 @@ import sys
 import argparse
 
 end_status = 0
+
+
 commands = ["ls", "cd", "exit", "conf-dump"]
 
 parser = argparse.ArgumentParser(description="Эмулятор оболочки ОС")
