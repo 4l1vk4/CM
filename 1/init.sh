@@ -3,5 +3,3 @@ cd dir1
 cfdf
 conf-dump
 exit
-
-
